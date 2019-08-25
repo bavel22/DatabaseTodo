@@ -18,9 +18,9 @@ public class TodoService {
         this.todoDao = todoDao;
     }
 
-    public void addTodo(Todo todo) {
+    public UUID addTodo(Todo todo) {
         System.out.println("Service");
-         todoDao.addTodo(todo);
+        return todoDao.addTodo(todo);
 
 
     }

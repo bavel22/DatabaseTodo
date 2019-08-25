@@ -17,18 +17,18 @@ public class FakeTodoDataAccessService implements TodoDao {
 
 
     @Override
-    public void addTodo(UUID id, Todo todo) {
+    public UUID addTodo(UUID id, Todo todo) {
         System.out.println("DAO1");
         todos.add(new Todo(id, todo.getName(), todo.getDescription()));
-       // return id;
+        return id;
     }
 
     @Override
-    public void addTodo(Todo todo) {
+    public UUID addTodo(Todo todo) {
         System.out.println("DAO2");
         UUID id = UUID.randomUUID();
         todos.add(new Todo(id, todo.getName(), todo.getDescription()));
-        //return id;
+        return id;
     }
 
     @Override

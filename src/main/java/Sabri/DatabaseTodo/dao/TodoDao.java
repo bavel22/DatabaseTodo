@@ -9,12 +9,12 @@ import java.util.UUID;
 public interface TodoDao {
 
 
-    void addTodo (UUID id, Todo todo);
+    UUID addTodo (UUID id, Todo todo);
 
-    default void addTodo(Todo todo) {
+    default UUID addTodo(Todo todo) {
 
         UUID id = UUID.randomUUID();
-         addTodo(id, todo);
+        return addTodo(id, todo);
     }
 
      Todo getTodo(UUID id);

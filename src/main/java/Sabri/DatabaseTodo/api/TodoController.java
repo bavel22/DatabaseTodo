@@ -29,8 +29,8 @@ public class TodoController {
 
 
     @PostMapping
-    public void addTodo(@RequestBody Todo todo) {
-        todoService.addTodo(todo);
+    public UUID addTodo(@RequestBody Todo todo) {
+       return todoService.addTodo(todo);
     }
 
     @GetMapping
