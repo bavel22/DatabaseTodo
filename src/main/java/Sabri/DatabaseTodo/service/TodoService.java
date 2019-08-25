@@ -14,22 +14,38 @@ public class TodoService {
     private final TodoDao todoDao;
 
     @Autowired
-    public TodoService(@Qualifier("fakeDao") TodoDao todoDao) {
+    public TodoService(@Qualifier("MySQL") TodoDao todoDao) {
         this.todoDao = todoDao;
     }
 
     public UUID addTodo(Todo todo) {
-        System.out.println("Service");
+
         return todoDao.addTodo(todo);
 
 
     }
 
-    public Todo getTodo(UUID id) {
-        return todoDao.getTodo(id);
+    public Todo getTodoById(UUID id) {
+        return todoDao.getTodoById(id);
     }
 
-    public List<Todo> getAllTodo() {
+    public List<Todo> getTodoByName(String name) {
+        return todoDao.getTodoByName(name);
+    }
+
+    public Iterable<Todo> getAllTodo() {
         return todoDao.getAllTodo();
+    }
+
+    public Iterable<Todo> getAllCompletedTodos() {
+        return todoDao.getAllCompletedTodos();
+    }
+
+    public void deleteTodo(UUID id) {
+        todoDao.deleteTodo(id);
+    }
+
+    public void putTodo(UUID id, Todo todo) {
+        todoDao.putTodo(id, todo);
     }
 }

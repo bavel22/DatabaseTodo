@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository("fakeDao")
@@ -32,24 +33,31 @@ public class FakeTodoDataAccessService implements TodoDao {
     }
 
     @Override
-    public Todo getTodo(UUID id) {
-
-        Todo foundTodo = new Todo("Not Found", "Not Found");
-
-        for (Todo todo: todos
-             ) { UUID todoId = todo.getId();
-
-             if (todoId.equals(id)) {
-                 foundTodo = todo;
-             }
-
-
-        }
-        return foundTodo;
+    public Todo getTodoById(UUID id) {
+        return null;
+    }
+    @Override
+    public List<Todo> getTodoByName(String name) {
+        return null;
     }
 
     @Override
     public List<Todo> getAllTodo() {
         return todos;
+    }
+
+    @Override
+    public Iterable<Todo> getAllCompletedTodos() {
+        return null;
+    }
+
+    @Override
+    public void deleteTodo(UUID id) {
+
+    }
+
+    @Override
+    public void putTodo(UUID id, Todo todo) {
+
     }
 }

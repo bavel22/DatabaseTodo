@@ -2,29 +2,33 @@ package Sabri.DatabaseTodo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-
+@Embeddable
 public class Todo {
     @Id
-    private UUID id;
+    private UUID id = UUID.randomUUID();
     private String name = "";
     private String description = "";
 
     private boolean complete = false;
 
-    private State state;
+
+    public Todo() {
+    }
 
     public Todo(@JsonProperty("id") UUID id, @JsonProperty("name") String name, @JsonProperty("description") String description) {
 
+        this.id = id;
         this.name = name;
         this.description = description;
-        this.id = id;
-        this.state = State.NEW;
+
+
         this.complete = complete;
     }
 
@@ -34,7 +38,8 @@ public class Todo {
         this.name = name;
         this.description = description;
         this.id = id;
-        this.state = State.NEW;
+
+
         this.complete = complete;
     }
 
@@ -43,7 +48,7 @@ public class Todo {
 
         this.name = name;
         this.description = description;
-        this.state = State.NEW;
+
         this.complete = false;
     }
 
@@ -54,7 +59,6 @@ public class Todo {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", complete=" + complete +
-                ", state=" + state +
                 '}';
     }
 
@@ -101,13 +105,5 @@ public class Todo {
 
     public void setComplete(boolean complete) {
         this.complete = complete;
-    }
-
-    public State getState() {
-        return state;
-    }
-
-    public void setState(State state) {
-        this.state = state;
     }
 }
