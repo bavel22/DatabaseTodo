@@ -1,7 +1,8 @@
 package Sabri.DatabaseTodo.service;
 
-import Sabri.DatabaseTodo.dao.TodoDao;
 import Sabri.DatabaseTodo.model.Todo;
+import Sabri.DatabaseTodo.model.TodoNotFoundException;
+import Sabri.DatabaseTodo.model.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -11,41 +12,39 @@ import java.util.*;
 @Service
 public class TodoService {
 
-    private final TodoDao todoDao;
+    private final TodoRepository todoRepository;
 
     @Autowired
-    public TodoService(@Qualifier("MySQL") TodoDao todoDao) {
-        this.todoDao = todoDao;
+    public TodoService(TodoRepository todoRepository) {
+       this.todoRepository = todoRepository;
     }
-
-    public UUID addTodo(Todo todo) {
-
-        return todoDao.addTodo(todo);
-
-
+    public Todo addTodo(Todo todo) {
+        return todoRepository.save(todo);
     }
 
     public Todo getTodoById(UUID id) {
-        return todoDao.getTodoById(id);
+         Optional<Todo> newTodo = todoRepository.findById(id);
+         return newTodo.orElseThrow(()-> new TodoNotFoundException(id));
+
     }
 
-    public List<Todo> getTodoByName(String name) {
-        return todoDao.getTodoByName(name);
+    public Todo findTodoByName(String name) {
+        return todoRepository.findTodoByName(name);
     }
 
     public Iterable<Todo> getAllTodo() {
-        return todoDao.getAllTodo();
+        return todoRepository.findAll();
     }
 
-    public Iterable<Todo> getAllCompletedTodos() {
-        return todoDao.getAllCompletedTodos();
+ //   public Iterable<Todo> getAllCompletedTodos() {
+  //      return todoDao.getAllCompletedTodos();
+  //  }
+
+    public void deleteById(UUID id) {
+        todoRepository.deleteById(id);
     }
 
-    public void deleteTodo(UUID id) {
-        todoDao.deleteTodo(id);
-    }
-
-    public void putTodo(UUID id, Todo todo) {
-        todoDao.putTodo(id, todo);
-    }
+ //   public void putTodo(UUID id, Todo todo) {
+  //      todoDao.putTodo(id, todo);
+   // }
 }

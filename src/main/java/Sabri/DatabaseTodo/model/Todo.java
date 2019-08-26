@@ -1,10 +1,10 @@
 package Sabri.DatabaseTodo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -12,8 +12,11 @@ import java.util.UUID;
 @Embeddable
 public class Todo {
     @Id
-    private UUID id = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
     private String name = "";
+
     private String description = "";
 
     private boolean complete = false;
@@ -22,7 +25,7 @@ public class Todo {
     public Todo() {
     }
 
-    public Todo(@JsonProperty("id") UUID id, @JsonProperty("name") String name, @JsonProperty("description") String description) {
+    public Todo(UUID id, String name, String description) {
 
         this.id = id;
         this.name = name;

@@ -13,6 +13,6 @@ import java.util.UUID;
 @Repository
 public interface TodoRepository extends CrudRepository<Todo, UUID> {
 
-
+    Todo findTodoByName(String name);
 
 }

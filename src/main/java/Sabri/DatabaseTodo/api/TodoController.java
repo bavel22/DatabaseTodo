@@ -26,9 +26,8 @@ public class TodoController {
         this.todoService = todoService;
     }
 
-
     @PostMapping
-    public UUID addTodo(@RequestBody Todo todo) {
+    public Todo addTodo(@RequestBody Todo todo) {
        return todoService.addTodo(todo);
     }
 
@@ -38,31 +37,30 @@ public class TodoController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/name/{name}")
-    public ResponseEntity<List<Todo>> getTodobyName(@PathVariable String name) {
-        return new ResponseEntity<>(todoService.getTodoByName(name), HttpStatus.OK);
+    public ResponseEntity<Todo> findTodoByName(@PathVariable String name) {
+        return new ResponseEntity<>(todoService.findTodoByName(name), HttpStatus.OK);
     }
 
 
     @DeleteMapping( path = "/{id}")
-    public void deleteTodo(@PathVariable final UUID id) {
-        todoService.deleteTodo(id);
+    public void deleteById(@PathVariable UUID id) {
+        todoService.deleteById(id);
     }
 
-    @PutMapping( path = "/{id}")
-    public void putTodo(@PathVariable final UUID id, @RequestBody Todo todo) {
-        todoService.putTodo(id, todo);
-    }
+//    @PutMapping( path = "/{id}")
+ //   public void putTodo(@PathVariable final UUID id, @RequestBody Todo todo) {
+ //       todoService.putTodo(id, todo);
+ //   }
 
-    // @RequestMapping(method = RequestMethod.GET, path = "/{id}")
     @GetMapping( path = "/{id}")
     public ResponseEntity<Todo> getTodoById(@PathVariable final UUID id) {
        return new ResponseEntity<>(todoService.getTodoById(id), HttpStatus.OK);
     }
 
-    @GetMapping( path = "/completed")
-    public ResponseEntity<Iterable<Todo>> getAllCompletedTodos() {
-        return new ResponseEntity<>(todoService.getAllCompletedTodos(), HttpStatus.OK);
-    }
+//    @GetMapping( path = "/completed")
+ //   public ResponseEntity<Iterable<Todo>> getAllCompletedTodos() {
+ //       return new ResponseEntity<>(todoService.getAllCompletedTodos(), HttpStatus.OK);
+ //   }
 
 }
 
