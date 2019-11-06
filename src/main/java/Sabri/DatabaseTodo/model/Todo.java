@@ -2,6 +2,7 @@ package Sabri.DatabaseTodo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -9,11 +10,13 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Embeddable
 public class Todo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(columnDefinition = "BINARY(16)")
     private UUID id;
+
 
     private String name = "";
 
@@ -21,38 +24,14 @@ public class Todo {
 
     private boolean complete = false;
 
-
     public Todo() {
     }
-
-    public Todo(UUID id, String name, String description) {
-
-        this.id = id;
-        this.name = name;
-        this.description = description;
-
-
-        this.complete = complete;
-    }
-
-    public Todo(String name, String description, UUID id, boolean complete) {
-
-
-        this.name = name;
-        this.description = description;
-        this.id = id;
-
-
-        this.complete = complete;
-    }
-
 
     public Todo(String name, String description) {
 
         this.name = name;
         this.description = description;
 
-        this.complete = false;
     }
 
     @Override
@@ -70,12 +49,15 @@ public class Todo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Todo todo = (Todo) o;
-        return Objects.equals(id, todo.id);
+        return complete == todo.complete &&
+                Objects.equals(id, todo.id) &&
+                Objects.equals(name, todo.name) &&
+                Objects.equals(description, todo.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, name, description, complete);
     }
 
     public UUID getId() {
